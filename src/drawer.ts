@@ -1,8 +1,11 @@
 
 import { scalePoint, projectPoint } from "./utilities.js";
 import { pointChar, wireChar, far, fov, color } from "./config.js";
+import type { DrawType, Model, Point2d, Point3d } from "./types.js";
+import type { ScreenBuffer, Terminal } from "terminal-kit";
+import type { PutOptions } from "terminal-kit/ScreenBuffer.js";
 
-function drawLine(p0, p1, canvas, char=",") {
+function drawLine(p0: Point2d, p1: Point2d, canvas: ScreenBuffer, char=",") {
 	
 	let dx = p1.x - p0.x; 
   let dy = p1.y - p0.y; 
@@ -22,13 +25,18 @@ function drawLine(p0, p1, canvas, char=",") {
   
   for (let i = 0; i < step; i++) { 
 		//console.log(round(x) + " " + round(y)); 
-		canvas.put({
+		let putOption : PutOptions = {
 			x:Math.round(x),
 			y:Math.round(y),
 			attr: {
 				color: color
-			}
-		}, char);
+			},
+			wrap: false,
+			dx: 0,
+			dy: 0
+		}
+
+		canvas.put(putOption, char);
 
   	x += x_incr; 
     y += y_incr; 
@@ -36,7 +44,7 @@ function drawLine(p0, p1, canvas, char=",") {
 
 }
 
-function fillBottomFlatTri(v1, v2, v3, canvas, char="#"){
+function fillBottomFlatTri(v1: Point2d, v2: Point2d, v3: Point2d, canvas: ScreenBuffer, char="#"){
 	let invslope1 = (v2.x - v1.x) / (v2.y - v1.y);
 	let invslope2 = (v3.x - v1.x) / (v3.y - v1.y);
 
@@ -50,7 +58,7 @@ function fillBottomFlatTri(v1, v2, v3, canvas, char="#"){
 	}
 }
 
-function fillTopFlatTri(v1, v2, v3, canvas, char="#"){
+function fillTopFlatTri(v1: Point2d, v2: Point2d, v3: Point2d, canvas: ScreenBuffer, char="#"){
 	let invslope1 = (v3.x - v1.x) / (v3.y - v1.y);
 	let invslope2 = (v3.x - v2.x) / (v3.y - v2.y)
 
@@ -64,7 +72,7 @@ function fillTopFlatTri(v1, v2, v3, canvas, char="#"){
 	}
 }
 
-function drawTriangle(p1, p2, p3, canvas, char="#"){
+function drawTriangle(p1: Point2d, p2: Point2d, p3: Point2d, canvas: ScreenBuffer, char="#"){
 
 	if(p1.y > p2.y) {[p1, p2] = [p2, p1]}
 	if(p1.y > p3.y) {[p1, p3] = [p3, p1]}
@@ -91,7 +99,7 @@ function drawTriangle(p1, p2, p3, canvas, char="#"){
 
 // -----------------------------------------------------
 
-function pointsDraw(model, term, canvas, scaleFactor, cam) {
+function pointsDraw(model: Model, term: Terminal, canvas: ScreenBuffer, scaleFactor: number, cam: Point3d) {
 	for(let i=0; i < model.verts.length; i++){
 		let p3d = model.verts[i];
 		
@@ -100,17 +108,22 @@ function pointsDraw(model, term, canvas, scaleFactor, cam) {
 		let p = projectPoint(scaledPoint, cam, fov, term);
 
 		if(scaledPoint.z < far) {
-			canvas.put({
+			let putOptions : PutOptions = {
 				x:p.x,
-				y:p.y, attr: {
+				y:p.y,
+				attr: {
 					color: color
-				}
-			}, pointChar)
+				},
+				wrap: false,
+				dx: 0, dy: 0,
+			}
+
+			canvas.put(putOptions, pointChar)
 		}
 	}
 }
 
-function wireDraw(model, term, canvas, scaleFactor, cam) {
+function wireDraw(model: Model, term: Terminal, canvas: ScreenBuffer, scaleFactor: number, cam: Point3d) {
 	for(let j = 0; j < model.faces.length; j++){
 		const face = model.faces[j];
 		let lastVert = 1;
@@ -140,7 +153,7 @@ function wireDraw(model, term, canvas, scaleFactor, cam) {
 	}
 }
 
-function fillDraw(model, term, canvas, scaleFactor, cam) {
+function fillDraw(model: Model, term: Terminal, canvas: ScreenBuffer, scaleFactor: number, cam: Point3d) {
 	for(let j = 0; j < model.faces.length; j++){
 		const face = model.faces[j];
 		let lastVert = 1;
@@ -168,8 +181,7 @@ const drawingMethods = {
 	"fill": fillDraw,
 }
 
-
-export function drawModel(model, scaleFactor, cam, type="points", term, canvas){
+export function drawModel(model: Model, scaleFactor: number, cam: Point3d, type: DrawType ="points", term: Terminal, canvas: ScreenBuffer){
 
 	model.faces.sort((f1, f2) => {
 		let mid1;

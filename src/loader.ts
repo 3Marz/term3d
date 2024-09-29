@@ -1,7 +1,8 @@
 
 import {readFileSync} from "node:fs"
+import type { Point3d, Face, Model } from "./types.ts"
 
-export function readObjFile(file){
+export function readObjFile(file : string){
 	let fileExtention = file.substring(file.lastIndexOf('.') + 1);
 	fileExtention = fileExtention.toLowerCase();
 	if(fileExtention != "obj") {
@@ -12,7 +13,7 @@ export function readObjFile(file){
 
 	var asArray = objFile.split('\n');
 	
-	var object = {
+	var object : Model = {
 		verts: [
 		],
 		normals: [
@@ -39,32 +40,32 @@ export function readObjFile(file){
 		}
 		else if (words[0] == "f"){
 			
-			let face = {
+			let face : Face = {
 				verts: [],
 				normals: [],
 				char: '.'
 			};
 
 			for(let j = 1; j < words.length; j++) {
-				let vert = words[j].split("/");
-				if (Number(vert[0]-1) != -1){
+				let vert : string[] = words[j].split("/");
+				if (+vert[0]-1 != -1){
 					face.verts.push(Number(vert[0]) - 1)
 				};
 				face.normals.push(Number(vert[2]) - 1);
 			}
 
-			let fakeLight = {x:0, y:-50, z:50}
-			let normal = face.normals[0] ? object.normals[face.normals[0]] : {x:0,y:0,z:0};
-			let dot = (fakeLight.x*normal.x) + (fakeLight.y*normal.y) + (fakeLight.z*normal.z)
+			let fakeLight : Point3d = {x:0, y:-50, z:50}
+			let normal : Point3d = face.normals[0] ? object.normals[face.normals[0]] : {x:0,y:0,z:0};
+			let dot : number = (fakeLight.x*normal.x) + (fakeLight.y*normal.y) + (fakeLight.z*normal.z)
 			let br = "%"
 			if(dot > -50) { br = "%" }
 			if(dot > -40) { br = "#" }
 			if(dot > -30) { br = "*" }
 			if(dot > -20) { br = "*" }
 			if(dot > -10) { br = "+" }
-			if(dot > 0) { br = "=" }
-			if(dot > 10) { br = "~" }
-			if(dot > 20)   { br = "-" }
+			if(dot > 0)   { br = "=" }
+			if(dot > 10)  { br = "~" }
+			if(dot > 20)  { br = "-" }
 			if(dot > 30)  { br = ":" }
 			if(dot > 40)  { br = "," }
 			if(dot > 50)  { br = "." }

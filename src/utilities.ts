@@ -1,9 +1,11 @@
+import { Terminal } from "terminal-kit";
+import type { Model, Point3d } from "./types.ts";
 
-export function print(terminal, x=1, y=1, str, ...args){
+export function print(terminal: Terminal, x=1, y=1, str: string, ...args: any){
 	terminal.moveTo.eraseLine.bgBlack.white(x,y,str, ...args);
 }
 
-export function rotatePoint(point, center, ax, ay, az){
+export function rotatePoint(point : Point3d, center : Point3d, ax: number, ay: number, az: number): Point3d {
 	let a, b, c;
 	let a1, b1, c1;
 	let a2, b2, c2;
@@ -32,11 +34,11 @@ export function rotatePoint(point, center, ax, ay, az){
 	return np3d;
 }
 
-export function scalePoint(p, scale) {
-		return {x: p.x*scale, y: p.y*scale, z:p.z*scale}
+export function scalePoint(p: Point3d, scale: number) : Point3d {
+	return {x: p.x*scale, y: p.y*scale, z:p.z*scale}
 }
 
-export function rotateModel(model, angleX, angleY, angleZ) {
+export function rotateModel(model: Model, angleX: number, angleY: number, angleZ: number) {
 	for(let i=0; i < model.verts.length; i++){
 		model.verts[i] = rotatePoint(model.verts[i], 
 																 {x:0,y:0,z:0},
@@ -44,7 +46,7 @@ export function rotateModel(model, angleX, angleY, angleZ) {
 	}
 }
 
-export function projectPoint(point, cam, fov, term){
+export function projectPoint(point: Point3d, cam: Point3d, fov: number, term: Terminal){
 
 	let x0 = point.x + cam.x;
 	let y0 = point.y + cam.y;

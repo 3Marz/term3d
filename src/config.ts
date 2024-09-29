@@ -9,7 +9,7 @@ export let wireChar = ":";
 
 export let color = "white"
 
-export function setConfigs(config) {
+export function setConfigs(config: any) {
 	fov = config.fov;
 	far = config.far;
 	pointChar = config.pointChar;

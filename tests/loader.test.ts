@@ -1,3 +1,4 @@
+
 import { readObjFile } from '../src/loader.js' 
 import { readFileSync } from "node:fs"
 

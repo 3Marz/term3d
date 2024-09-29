@@ -1,4 +1,4 @@
-#!/bin/node  
+#!/usr/bin/env node  
 
 import kit from "terminal-kit";
 import { readObjFile } from "./loader.js"
@@ -6,6 +6,7 @@ import { rotateModel } from "./utilities.js"
 import { drawModel } from "./drawer.js";
 import { setConfigs } from "./config.js";
 import meow from "meow";
+import type { DrawType } from "./types.js";
 
 const { terminal } = kit;
 var canvas = new kit.ScreenBuffer({
@@ -88,14 +89,14 @@ Controls:
 
 setConfigs(cli.flags)
 
-var file = cli.input.at(0) ? cli.input.at(0) : "";
+var file : string | undefined = cli.input.at(0) ? cli.input.at(0) : "";
 
-if(file.length == 0) {
+if(file == undefined || file.length == 0) {
 	throw new Error("No file provided")
 }
 
 var model = readObjFile(file);
-var viewType = cli.flags.view; 
+var viewType: DrawType = cli.flags.view as DrawType; 
 var rotateY = true;
 const rotateYSpeed  = cli.flags.ySpeed
 var scaleFactor = cli.flags.scale;
@@ -105,7 +106,7 @@ function terminate(){
 	process.exit()	
 }
 
-function input(key) {
+function input(key: string) {
 	switch(key) {
 
 		case 'w':
@@ -174,7 +175,7 @@ function input(key) {
 function init() {
 	terminal.hideCursor()
 	terminal.clear()
-	terminal.grabInput()
+	terminal.grabInput({})
 	terminal.on('key', input)
 }
 

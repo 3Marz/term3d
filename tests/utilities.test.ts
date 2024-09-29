@@ -1,3 +1,4 @@
+import { Terminal } from "terminal-kit";
 import { scalePoint, rotatePoint, projectPoint } from "../src/utilities.js";
 
 const point1 = {x: 3, y: 3, z: 3};
@@ -19,7 +20,7 @@ test("Rotate Point", () => {
 })
 
 test("Fake 3D Projection", () => {
-	expect(projectPoint(point1,fakeCam, 100, fakeTerm)).toStrictEqual({x:28, y:28})
-	expect(projectPoint(center,fakeCam, 100, fakeTerm)).toStrictEqual({x:25, y:25})
+	expect(projectPoint(point1,fakeCam, 100, fakeTerm as Terminal)).toStrictEqual({x:28, y:28})
+	expect(projectPoint(center,fakeCam, 100, fakeTerm as Terminal)).toStrictEqual({x:25, y:25})
 })
 
