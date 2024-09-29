@@ -1,0 +1,37 @@
+{
+  "name": "3d-ascii-model-viewer",
+  "version": "1.0.0",
+  "description": "",
+	"source":"src/main.js",
+  "main": "dist/view3d.js",
+  "type": "module",
+  "scripts": {
+		"build": "parcel build; chmod +x ./dist/view3d.js",
+		"watch": "parcel watch",
+    "test": "node --experimental-vm-modules --no-warnings node_modules/jest/bin/jest.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "clipboardy": "^4.0.0",
+    "meow": "^13.2.0",
+    "terminal-kit": "^3.1.1"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "jest": "^29.7.0",
+    "parcel": "^2.12.0"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "jest": {
+    "transform": {}
+  },
+  "pkg": {
+    "scripts": "src/**/*.js",
+    "targets": ["node22-linux-x64"],
+    "outputPath": "dist"
+  }
+}
