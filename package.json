@@ -1,6 +1,6 @@
 {
   "name": "term3d",
-  "version": "1.0.5",
+  "version": "1.0.6",
 	"author": "3Marz",
   "description": "Lowpoly 3D model viewer for the terminal made in javascript",
   "source": "src/main.ts",
@@ -8,11 +8,12 @@
   "type": "module",
 	"license": "MIT",
 	"bin": {
-		"term3d": "dist/term3d.js"
+		"term3d": "dist/main.js"
 	},
   "scripts": {
     "test": "jest",
-    "build": "parcel build"
+    "build": "tsc; chmod +x dist/main.js",
+		"clean": "rm dist/*.js"
   },
   "keywords": [
 		"3d",
@@ -37,8 +38,6 @@
     "@types/jest": "^29.5.13",
     "@types/terminal-kit": "^2.5.6",
     "jest": "^29.7.0",
-    "parcel": "^2.12.0",
-    "parcel-bundler": "^1.12.5",
     "process": "^0.11.10",
     "ts-jest": "^29.2.5",
     "ts-node": "^10.9.2"
