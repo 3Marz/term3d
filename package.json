@@ -1,10 +1,13 @@
 {
-  "name": "view3d",
-  "version": "1.0.0",
+  "name": "term3d",
+  "version": "1.0.3",
   "description": "Lowpoly 3D model viewer for the terminal made in javascript",
   "source": "src/main.ts",
-  "main": "dist/view3d.js",
+  "main": "dist/term3d.js",
   "type": "module",
+	"bin": {
+		"term3d": "dist/term3d.js"
+	},
   "scripts": {
     "test": "jest",
     "build": "parcel build"
