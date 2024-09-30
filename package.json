@@ -22,8 +22,6 @@
 		"graphics",
 		"rendering"
 	],
-  "author": "",
-  "license": "ISC",
 	"repository": {
     "type": "git",
     "url": "git+https://github.com/3Marz/term3d.git"
