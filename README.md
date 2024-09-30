@@ -2,14 +2,15 @@
 
 ## Display your lowpoly 3d models in the terminal!
 
+![](https://raw.githubusercontent.com/3Marz/term3d/main/assets/preview.gif)
 
 ## Instaltion :
-```bash
+```
 npm i -g term3d
 ```
 
 ## Useage :
-```bash
+```
 Display your low poly 3d models in the terminal!
 
 Usage:
@@ -33,3 +34,9 @@ Controls:
   a-d        : rotate along the z axis
   e          : toggle y rotation
 ```
+
+## TODOS
+
+- [ ] Fix weird line rendering
+- [ ] add custom ascii gradient based on user input
+
