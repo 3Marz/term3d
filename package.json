@@ -1,12 +1,15 @@
 {
   "name": "term3d",
-  "version": "1.0.7",
+  "version": "1.0.8",
 	"author": "3Marz",
   "description": "Lowpoly 3D model viewer for the terminal made in javascript",
   "source": "src/main.ts",
   "main": "dist/term3d.js",
   "type": "module",
 	"license": "MIT",
+	"files": [
+		"/dist"
+	],
 	"bin": {
 		"term3d": "dist/main.js"
 	},
