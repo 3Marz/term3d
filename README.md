@@ -8,6 +8,20 @@
 ```
 npm i -g term3d
 ```
+Also available in the AUR
+```
+yay -S term3d
+```
+
+## How does it work?
+The renderer doesn't use the traditional <a href="https://en.wikipedia.org/wiki/3D_projection#Perspective_projection">perspective projection</a>
+instead, it uses another projection method called <a href="https://en.wikipedia.org/wiki/3D_projection#Weak_perspective_projection">weak perspective projection</a>,
+which is not common at all because its very limiting, but for a simple model viewer without a moving camera it's good enough,
+plus it's very simple to implement here is the algorthim for it:
+```
+point2d.x = (point3d.x * fov) / point3d.z + (screenWidth/2)
+point2d.y = (point3d.y * fov) / point3d.z + (screenHeight/2)
+```
 
 ## Useage :
 ```
@@ -39,4 +53,6 @@ Controls:
 
 - [ ] Fix weird line rendering
 - [ ] add custom ascii gradient based on user input
+- [ ] support multiple file formats (.gltf/.glb, .stl, .fbx)
+- [X] Add to the AUR
 
