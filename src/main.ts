@@ -21,7 +21,7 @@ var cli = meow(`
 Display your low poly 3d models in the terminal!
 
 Usage:
-  ascii3d <your_model.obj> [Options]
+  term3d <your_model.obj> [Options]
 
 Options:
   --view     -v      The View type either "fill" or "wire" of "points"

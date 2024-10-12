@@ -25,7 +25,7 @@ point2d.y = (point3d.y * fov) / point3d.z + (screenHeight/2)
 
 ## Useage :
 ```
-ascii3d <your_model.obj> [Options]
+term3d <your_model.obj> [Options]
 
 Options:
   --view     -v      The View type either "fill" or "wire" of "points"
