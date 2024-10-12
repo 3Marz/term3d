@@ -25,10 +25,7 @@ point2d.y = (point3d.y * fov) / point3d.z + (screenHeight/2)
 
 ## Useage :
 ```
-Display your low poly 3d models in the terminal!
-
-Usage:
-  ascii3d <your_model.obj> [Options]
+ascii3d <your_model.obj> [Options]
 
 Options:
   --view     -v      The View type either "fill" or "wire" of "points"
