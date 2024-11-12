@@ -39,30 +39,16 @@ function readStlFile(file : string) {
 			normals: [normalsIndex],
 			char: "."
 		}
-		model.normals.push({x: face.normal[0], y: face.normal[1], z: face.normal[2]})
-		normalsIndex++
 		for(const vert of face.verts) {
 			model.verts.push({ x: vert[0], y: vert[1], z: vert[2] })
 			modelFace.verts.push(vertsIndex)
 			vertsIndex++
 		}
-		// For Brigtness
-		let fakeLight : Point3d = {x:0, y:-50, z:50}
 		let normal : Point3d = {x: face.normal[0], y: face.normal[1], z: face.normal[2]}  	
-		let dot : number = (fakeLight.x*normal.x) + (fakeLight.y*normal.y) + (fakeLight.z*normal.z)
-		let br = "%"
-		if(dot > -50) { br = "%" }
-		if(dot > -40) { br = "#" }
-		if(dot > -30) { br = "*" }
-		if(dot > -20) { br = "*" }
-		if(dot > -10) { br = "+" }
-		if(dot > 0)   { br = "=" }
-		if(dot > 10)  { br = "~" }
-		if(dot > 20)  { br = "-" }
-		if(dot > 30)  { br = ":" }
-		if(dot > 40)  { br = "," }
-		if(dot > 50)  { br = "." }
-		modelFace.char = br;
+		model.normals.push(normal)
+		modelFace.char = calcBrightness(normal);
+		normalsIndex++
+
 		model.faces.push(modelFace)
 	}
 	return model
@@ -114,22 +100,8 @@ function readObjFile(file : string){
 				face.normals.push(Number(vert[2]) - 1);
 			}
 
-			let fakeLight : Point3d = {x:0, y:-50, z:50}
 			let normal : Point3d = face.normals[0] ? object.normals[face.normals[0]] : {x:0,y:0,z:0};
-			let dot : number = (fakeLight.x*normal.x) + (fakeLight.y*normal.y) + (fakeLight.z*normal.z)
-			let br = "%"
-			if(dot > -50) { br = "%" }
-			if(dot > -40) { br = "#" }
-			if(dot > -30) { br = "*" }
-			if(dot > -20) { br = "*" }
-			if(dot > -10) { br = "+" }
-			if(dot > 0)   { br = "=" }
-			if(dot > 10)  { br = "~" }
-			if(dot > 20)  { br = "-" }
-			if(dot > 30)  { br = ":" }
-			if(dot > 40)  { br = "," }
-			if(dot > 50)  { br = "." }
-			face.char = br;
+			face.char = calcBrightness(normal);
 
 			
 			object.faces.push(
@@ -142,5 +114,23 @@ function readObjFile(file : string){
 	}
 	
 	return object;
+}
+
+function calcBrightness(normal: Point3d) {
+	let fakeLight : Point3d = {x:0, y:-50, z:50}
+	let dot : number = (fakeLight.x*normal.x) + (fakeLight.y*normal.y) + (fakeLight.z*normal.z)
+	let br = "%"
+	if(dot > -50) { br = "%" }
+	if(dot > -40) { br = "#" }
+	if(dot > -30) { br = "*" }
+	if(dot > -20) { br = "*" }
+	if(dot > -10) { br = "+" }
+	if(dot > 0)   { br = "=" }
+	if(dot > 10)  { br = "~" }
+	if(dot > 20)  { br = "-" }
+	if(dot > 30)  { br = ":" }
+	if(dot > 40)  { br = "," }
+	if(dot > 50)  { br = "." }
+	return br;
 }
 
