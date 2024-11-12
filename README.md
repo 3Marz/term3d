@@ -25,7 +25,8 @@ point2d.y = (point3d.y * fov) / point3d.z + (screenHeight/2)
 
 ## Useage :
 ```
-term3d <your_model.obj> [Options]
+term3d <path/to/your_model> [Options]
+Supported file formats: .obj | .stl
 
 Options:
   --view     -v      The View type either "fill" or "wire" of "points"
@@ -50,6 +51,6 @@ Controls:
 
 - [ ] Fix weird line rendering
 - [ ] add custom ascii gradient based on user input
-- [ ] support multiple file formats (.gltf/.glb, .stl, .fbx)
+- [ ] support multiple file formats (.gltf/.glb, .fbx)
 - [X] Add to the AUR
 
