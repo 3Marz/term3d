@@ -1,14 +1,26 @@
 
-import {readFileSync} from "node:fs"
+import {Mode, readFileSync} from "node:fs"
 import type { Point3d, Face, Model } from "./types.ts"
 
-export function readObjFile(file : string){
+export function readModel(file : string) {
 	let fileExtention = file.substring(file.lastIndexOf('.') + 1);
 	fileExtention = fileExtention.toLowerCase();
-	if(fileExtention != "obj") {
-		throw new Error("The Only supported format is .obj");
+	let model: Model = {
+		verts: [],
+		normals: [],
+		faces: []
 	}
+	switch (fileExtention) {
+		case "obj":
+			model = readObjFile(file);
+			break;
+		default:
+			throw new Error(`File extension ${fileExtention} not supported.`);
+	}
+	return model;
+}
 
+export function readObjFile(file : string){
 	var objFile = readFileSync(file, 'utf-8');
 
 	var asArray = objFile.split('\n');

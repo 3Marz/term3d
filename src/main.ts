@@ -1,7 +1,7 @@
 #!/usr/bin/env node  
 
 import kit from "terminal-kit";
-import { readObjFile } from "./loader.js"
+import { readModel } from "./loader.js"
 import { rotateModel } from "./utilities.js"
 import { drawModel } from "./drawer.js";
 import { setConfigs } from "./config.js";
@@ -95,7 +95,7 @@ if(file == undefined || file.length == 0) {
 	throw new Error("No file provided")
 }
 
-var model = readObjFile(file);
+var model = readModel(file);
 var viewType: DrawType = cli.flags.view as DrawType; 
 var rotateY = true;
 const rotateYSpeed  = cli.flags.ySpeed
