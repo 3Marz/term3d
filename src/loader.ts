@@ -1,6 +1,7 @@
 
 import {Mode, readFileSync} from "node:fs"
 import type { Point3d, Face, Model } from "./types.ts"
+import stl from "stl"
 
 export function readModel(file : string) {
 	let fileExtention = file.substring(file.lastIndexOf('.') + 1);
@@ -14,13 +15,60 @@ export function readModel(file : string) {
 		case "obj":
 			model = readObjFile(file);
 			break;
+		case "stl":
+			model = readStlFile(file)
+			break
 		default:
 			throw new Error(`File extension ${fileExtention} not supported.`);
 	}
 	return model;
 }
 
-export function readObjFile(file : string){
+function readStlFile(file : string) {
+	let stlObj = stl.toObject(readFileSync(file))
+	let model: Model = {
+		verts: [],
+		normals: [],
+		faces: []
+	}
+	let vertsIndex = 0
+	let normalsIndex = 0
+	for (const face of stlObj.facets) {
+		let modelFace: Face = {
+			verts: [],
+			normals: [normalsIndex],
+			char: "."
+		}
+		model.normals.push({x: face.normal[0], y: face.normal[1], z: face.normal[2]})
+		normalsIndex++
+		for(const vert of face.verts) {
+			model.verts.push({ x: vert[0], y: vert[1], z: vert[2] })
+			modelFace.verts.push(vertsIndex)
+			vertsIndex++
+		}
+		// For Brigtness
+		let fakeLight : Point3d = {x:0, y:-50, z:50}
+		let normal : Point3d = {x: face.normal[0], y: face.normal[1], z: face.normal[2]}  	
+		let dot : number = (fakeLight.x*normal.x) + (fakeLight.y*normal.y) + (fakeLight.z*normal.z)
+		let br = "%"
+		if(dot > -50) { br = "%" }
+		if(dot > -40) { br = "#" }
+		if(dot > -30) { br = "*" }
+		if(dot > -20) { br = "*" }
+		if(dot > -10) { br = "+" }
+		if(dot > 0)   { br = "=" }
+		if(dot > 10)  { br = "~" }
+		if(dot > 20)  { br = "-" }
+		if(dot > 30)  { br = ":" }
+		if(dot > 40)  { br = "," }
+		if(dot > 50)  { br = "." }
+		modelFace.char = br;
+		model.faces.push(modelFace)
+	}
+	return model
+}
+
+function readObjFile(file : string){
 	var objFile = readFileSync(file, 'utf-8');
 
 	var asArray = objFile.split('\n');

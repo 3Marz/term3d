@@ -1,37 +1,38 @@
 {
   "name": "term3d",
   "version": "1.1.1",
-	"author": "3Marz",
+  "author": "3Marz",
   "description": "Lowpoly 3D model viewer for the terminal made in javascript",
   "source": "src/main.ts",
   "main": "dist/term3d.js",
   "type": "module",
-	"license": "MIT",
-	"files": [
-		"/dist"
-	],
-	"bin": {
-		"term3d": "dist/main.js"
-	},
+  "license": "MIT",
+  "files": [
+    "/dist"
+  ],
+  "bin": {
+    "term3d": "dist/main.js"
+  },
   "scripts": {
     "test": "jest",
     "build": "tsc; chmod +x dist/main.js",
-		"clean": "rm dist/*.js"
+    "clean": "rm dist/*.js"
   },
   "keywords": [
-		"3d",
-		"terminal",
-		"ascii",
-		"graphics",
-		"rendering"
-	],
-	"repository": {
+    "3d",
+    "terminal",
+    "ascii",
+    "graphics",
+    "rendering"
+  ],
+  "repository": {
     "type": "git",
     "url": "git+https://github.com/3Marz/term3d.git"
   },
-	"homepage": "https://github.com/3Marz/term3d#readme",
+  "homepage": "https://github.com/3Marz/term3d#readme",
   "dependencies": {
     "meow": "^13.2.0",
+    "stl": "^1.1.1",
     "terminal-kit": "^3.1.1"
   },
   "devDependencies": {
