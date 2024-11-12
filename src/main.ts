@@ -1,4 +1,4 @@
-//#!/usr/bin/env node  
+#!/usr/bin/env node  
 
 import kit from "terminal-kit";
 import { readModel } from "./loader.js"
